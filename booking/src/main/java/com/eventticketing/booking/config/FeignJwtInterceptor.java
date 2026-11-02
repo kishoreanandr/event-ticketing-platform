@@ -24,7 +24,6 @@ public class FeignJwtInterceptor implements RequestInterceptor {
 
         if(authorization!=null && authorization.startsWith("Bearer ")){
             requestTemplate.header("Authorization",authorization);
-            System.out.println(authorization);
         }
     }
 }

@@ -1,0 +1,64 @@
+spring:
+  kafka:
+    bootstrap-server: localhost:9092
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      connect-timeout: 2s
+      timeout: 2s
+  cloud:
+    consul:
+      enabled: true
+      discovery:
+        prefer-ip-address: true
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 2000
+            readTimeout: 12000
+            retryer: com.eventticketing.booking.client.BoundedFeignRetryer
+      circuitbreaker:
+        enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,circuitbreakers,circuitbreakerevents
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      EventServiceClientvalidateEventForBookingLong:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 4
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 2
+      UserServiceClientvalidateUserForBookingLong:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 4
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 2
+      EventServiceClienttestSlowResponselong:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 4
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 2
+  timelimiter:
+    instances:
+      EventServiceClienttestSlowResponselong:
+        timeoutDuration: 3s
+        cancelRunningFuture: true

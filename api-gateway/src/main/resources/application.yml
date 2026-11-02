@@ -1,0 +1,28 @@
+spring:
+  cloud:
+    consul:
+      enabled: true
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: user-service
+              uri: lb://user-service
+              predicates:
+                - Path=/auth/**
+            - id: event-service
+              uri: lb://event-service
+              predicates:
+                - Path=/events/**
+            - id: booking-service
+              uri: lb://booking-service
+              predicates:
+                - Path=/bookings/**
+server:
+  port: 9090
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+

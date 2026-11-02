@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    consul:
+      enabled: true
+      discovery:
+        prefer-ip-address: true
+  application:
+    name: event-service
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

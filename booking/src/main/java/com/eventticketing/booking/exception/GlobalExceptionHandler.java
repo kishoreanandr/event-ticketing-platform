@@ -4,6 +4,7 @@ package com.eventticketing.booking.exception;
 import com.eventticketing.booking.dto.BookingErrorResponse;
 import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.cloud.client.circuitbreaker.NoFallbackAvailableException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -79,6 +80,17 @@ public class GlobalExceptionHandler {
         return buildResponse(
                 HttpStatus.SERVICE_UNAVAILABLE,
                 "Unable to communicate with another service",
+                request
+        );
+    }
+
+    @ExceptionHandler(NoFallbackAvailableException.class)
+    public ResponseEntity<BookingErrorResponse> handlingCircuitBreakerException(
+            NoFallbackAvailableException exception,
+            HttpServletRequest request){
+        return buildResponse(
+                HttpStatus.SERVICE_UNAVAILABLE,
+                "A dependent service is currently unavailable",
                 request
         );
     }

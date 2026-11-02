@@ -37,6 +37,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/events/**").hasRole("ORGANIZER")
                         .requestMatchers(HttpMethod.PATCH,"/events/**").hasRole("ORGANIZER")
                         .requestMatchers(HttpMethod.PUT,"/events/**").hasRole("ORGANIZER")
+                        .requestMatchers("/actuator/health",
+                                "/actuator/health/**").permitAll()
                         .anyRequest().authenticated()
                 )
 

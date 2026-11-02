@@ -1,7 +1,7 @@
 package com.eventticketing.booking.controller;
 
 import com.eventticketing.booking.dto.BookingResponse;
-import com.eventticketing.booking.entity.BookingCreateRequest;
+import com.eventticketing.booking.dto.EventBookingValidationResponse;
 import com.eventticketing.booking.service.BookingService;
 import com.eventticketing.common_security.security.SecurityUtils;
 import jakarta.validation.Valid;
@@ -20,7 +20,7 @@ public class BookingController {
     }
     @PostMapping
     public ResponseEntity<BookingResponse> createBooking(
-            @Valid @RequestBody BookingCreateRequest request) {
+            @Valid @RequestBody EventBookingValidationResponse.BookingCreateRequest request) {
 
         Long userId = SecurityUtils.getCurrentUserId();
         BookingResponse response =

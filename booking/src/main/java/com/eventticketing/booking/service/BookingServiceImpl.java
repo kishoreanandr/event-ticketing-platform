@@ -51,7 +51,7 @@ public class BookingServiceImpl implements BookingService{
 
     @Override
     @Transactional
-    public BookingResponse createBooking(Long userId, BookingCreateRequest request) {
+    public BookingResponse createBooking(Long userId, EventBookingValidationResponse.BookingCreateRequest request) {
 
         validateRequest(request);
 
@@ -273,7 +273,7 @@ public class BookingServiceImpl implements BookingService{
                         .toUpperCase();
     }
 
-    private void validateRequest(BookingCreateRequest request) {
+    private void validateRequest(EventBookingValidationResponse.BookingCreateRequest request) {
         if(request==null){
             throw new InvalidBookingRequestException("Invalid Event Id!.. ");
         }

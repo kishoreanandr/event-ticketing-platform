@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+  application:
+    name: user-service
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
